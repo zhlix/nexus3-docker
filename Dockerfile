@@ -2,18 +2,19 @@
 FROM eclipse-temurin:17-jre-jammy as downloader
 
 ARG NEXUS_VERSION=${NEXUS_VERSION}
-ARG NEXUS_DOWNLOAD_URL=https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-unix.tar.gz
+# ARG NEXUS_DOWNLOAD_URL=https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-unix.tar.gz
+ARG NEXUS_DOWNLOAD_URL=https://download.sonatype.com/nexus/3/sonatype-nexus-repository-${NEXUS_VERSION}-assembly.zip
 
 # Download Nexus and other stuff we need later
 # Use wget to improve performance (#11)
 # Install wget
-RUN apt update && apt install -y wget
+RUN apt update && apt install -y wget unzip
 # Download + extract Nexus to "/tmp/sonatype/nexus" for use later
-RUN wget --quiet --output-document=/tmp/nexus.tar.gz "${NEXUS_DOWNLOAD_URL}" && \
+RUN wget --quiet --output-document=/tmp/nexus.zip "${NEXUS_DOWNLOAD_URL}" && \
     mkdir /tmp/sonatype && \
-    tar -zxf /tmp/nexus.tar.gz -C /tmp/sonatype && \
+    unzip /tmp/nexus.zip -d /tmp/sonatype && \
     mv /tmp/sonatype/nexus-${NEXUS_VERSION} /tmp/sonatype/nexus && \
-    rm /tmp/nexus.tar.gz
+    rm /tmp/nexus.zip
 
 
 
