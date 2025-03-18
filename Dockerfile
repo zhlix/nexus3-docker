@@ -4,6 +4,7 @@ FROM eclipse-temurin:17-jre-jammy as downloader
 ARG NEXUS_VERSION=${NEXUS_VERSION}
 # ARG NEXUS_DOWNLOAD_URL=https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-unix.tar.gz
 ARG NEXUS_DOWNLOAD_URL=https://download.sonatype.com/nexus/3/sonatype-nexus-repository-${NEXUS_VERSION}-assembly.zip
+ARG NEXUS_PLUGIN_APK_DOWNLOAD_URL=https://github.com/805728578/nexus-repository-apk/releases/download/3.70.1/nexus-repository-apk-${NEXUS_VERSION}-bundle.kar
 
 # Download Nexus and other stuff we need later
 # Use wget to improve performance (#11)
@@ -15,8 +16,7 @@ RUN wget --quiet --output-document=/tmp/nexus.zip "${NEXUS_DOWNLOAD_URL}" && \
     unzip /tmp/nexus.zip -d /tmp/sonatype && \
     mv /tmp/sonatype/nexus-${NEXUS_VERSION} /tmp/sonatype/nexus && \
     rm /tmp/nexus.zip
-
-
+RUN wget --quiet --output-document=/tmp/sonatype/nexus/deploy/nexus-repository-apk-${NEXUS_VERSION}-bundle.kar "${NEXUS_PLUGIN_APK_DOWNLOAD_URL}"
 
 
 # Runtime image
