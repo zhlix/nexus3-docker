@@ -62,6 +62,7 @@ RUN groupadd --gid 200 nexus && \
 
 # Data directory "/nexus-data" owned by "nexus" user
 RUN chown -R nexus:nexus /nexus-data
+RUN chmod +x /opt/sonatype/nexus/bin/*
 
 # Data volume
 VOLUME /nexus-data
