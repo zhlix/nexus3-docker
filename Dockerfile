@@ -15,7 +15,7 @@ RUN apt update && apt install -y wget
 RUN wget --quiet --output-document=/tmp/nexus.tar.gz "${NEXUS_DOWNLOAD_URL}" && \
     mkdir /tmp/sonatype && \
     # unzip /tmp/nexus.zip -d /tmp/sonatype && \
-    tar -zxf /tmp/nexus.tar.gz -C /tmp/sonatype \
+    tar -zxf /tmp/nexus.tar.gz -C /tmp/sonatype/ \
     mv /tmp/sonatype/nexus-${NEXUS_VERSION} /tmp/sonatype/nexus && \
     # rm /tmp/nexus.zip
     rm /tmp/nexus.tar.gz
@@ -43,7 +43,7 @@ RUN \
     ln -s /nexus-data /opt/sonatype/sonatype-work/nexus3
 
 # Fix-up: Startup command line: Remove hard-coded memory parameters in /opt/sonatype/nexus/bin/nexus.vmoptions (per official Docker image)
-RUN sed -i '/^-Xms/d;/^-Xmx/d;/^-XX:MaxDirectMemorySize/d' /opt/sonatype/nexus/bin/nexus
+RUN sed -i '/^-Xms/d;/^-Xmx/d;/^-XX:MaxDirectMemorySize/d' /opt/sonatype/nexus/bin/nexus.vmoptions
 
 # Enable NEXUS_CONTEXT env-variable via nexus-default.properties
 RUN sed -i -e 's/^nexus-context-path=\//nexus-context-path=\/\${NEXUS_CONTEXT}/g' /opt/sonatype/nexus/etc/nexus-default.properties
