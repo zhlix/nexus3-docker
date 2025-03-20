@@ -10,11 +10,12 @@ ARG NEXUS_PLUGIN_APK_DOWNLOAD_URL=https://github.com/805728578/nexus-repository-
 # Download Nexus and other stuff we need later
 # Use wget to improve performance (#11)
 # Install wget
-RUN apt update && apt install -y wget unzip
+RUN apt update && apt install -y wget
 # Download + extract Nexus to "/tmp/sonatype/nexus" for use later
-RUN wget --quiet --output-document=/tmp/nexus.zip "${NEXUS_DOWNLOAD_URL}" && \
+RUN wget --quiet --output-document=/tmp/nexus.tar.gz "${NEXUS_DOWNLOAD_URL}" && \
     mkdir /tmp/sonatype && \
-    unzip /tmp/nexus.zip -d /tmp/sonatype && \
+    # unzip /tmp/nexus.zip -d /tmp/sonatype && \
+    tar -zxf /tmp/nexus.tar.gz -C /tmp/sonatype \
     mv /tmp/sonatype/nexus-${NEXUS_VERSION} /tmp/sonatype/nexus && \
     rm /tmp/nexus.zip
 RUN wget --quiet --output-document=/tmp/sonatype/nexus/deploy/nexus-repository-apk-${NEXUS_VERSION}-bundle.kar "${NEXUS_PLUGIN_APK_DOWNLOAD_URL}"
