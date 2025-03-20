@@ -17,7 +17,8 @@ RUN wget --quiet --output-document=/tmp/nexus.tar.gz "${NEXUS_DOWNLOAD_URL}" && 
     # unzip /tmp/nexus.zip -d /tmp/sonatype && \
     tar -zxf /tmp/nexus.tar.gz -C /tmp/sonatype \
     mv /tmp/sonatype/nexus-${NEXUS_VERSION} /tmp/sonatype/nexus && \
-    rm /tmp/nexus.zip
+    # rm /tmp/nexus.zip
+    rm /tmp/nexus.tar.gz
 RUN wget --quiet --output-document=/tmp/sonatype/nexus/deploy/nexus-repository-apk-${NEXUS_VERSION}-bundle.kar "${NEXUS_PLUGIN_APK_DOWNLOAD_URL}"
 
 
