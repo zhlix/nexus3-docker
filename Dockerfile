@@ -15,7 +15,7 @@ RUN apt update && apt install -y wget
 RUN wget --quiet --output-document=/tmp/nexus.tar.gz "${NEXUS_DOWNLOAD_URL}" && \
     mkdir /tmp/sonatype && \
     # unzip /tmp/nexus.zip -d /tmp/sonatype && \
-    tar -zxf /tmp/nexus.tar.gz -C /tmp/sonatype/ \
+    tar -zxf /tmp/nexus.tar.gz -C /tmp/sonatype/ && \
     mv /tmp/sonatype/nexus-${NEXUS_VERSION} /tmp/sonatype/nexus && \
     # rm /tmp/nexus.zip
     rm /tmp/nexus.tar.gz
