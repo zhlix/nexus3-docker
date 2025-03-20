@@ -5,7 +5,6 @@ ARG NEXUS_VERSION=${NEXUS_VERSION}
 ARG JAVA_VERSION=java17
 ARG NEXUS_DOWNLOAD_URL=https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-${JAVA_VERSION}-unix.tar.gz
 # ARG NEXUS_DOWNLOAD_URL=https://download.sonatype.com/nexus/3/sonatype-nexus-repository-${NEXUS_VERSION}-assembly.zip
-ARG NEXUS_PLUGIN_APK_DOWNLOAD_URL=https://github.com/805728578/nexus-repository-apk/releases/download/$(echo $NEXUS_VERSION | sed 's/-02//')/nexus-repository-apk-${NEXUS_VERSION}-bundle.kar
 
 # Download Nexus and other stuff we need later
 # Use wget to improve performance (#11)
@@ -19,8 +18,6 @@ RUN wget --quiet --output-document=/tmp/nexus.tar.gz "${NEXUS_DOWNLOAD_URL}" && 
     mv /tmp/sonatype/nexus-${NEXUS_VERSION} /tmp/sonatype/nexus && \
     # rm /tmp/nexus.zip
     rm /tmp/nexus.tar.gz
-RUN wget --quiet --output-document=/tmp/sonatype/nexus/deploy/nexus-repository-apk-${NEXUS_VERSION}-bundle.kar "${NEXUS_PLUGIN_APK_DOWNLOAD_URL}"
-
 
 # Runtime image
 # Logic adapted from official Dockerfile
